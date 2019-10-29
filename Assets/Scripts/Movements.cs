@@ -5,59 +5,70 @@ public class Movements : MonoBehaviour {
     [SerializeField] private float speed = 10;
     [SerializeField] private float strengthJump = 10;
     [SerializeField] private bool floor = true;
+
+    private Rigidbody2D rb;
+    private SpriteRenderer sprite;
+
     private float move;
+    private bool jumping;
+
     private void Start() {
-        
+        rb = GetComponent<Rigidbody2D>();
+        sprite = GetComponent<SpriteRenderer>();
     }
 
-    private void FixedUpdate() {
-        // Jump();
-        // Move();
-        Flip();
-        RunAnimation();
+    private void Update() {
+        move = Input.GetAxis("Horizontal");
 
         if (floor && Input.GetKeyDown(KeyCode.Space)) {
-            GetComponent<Rigidbody2D>().AddForce(new Vector2(0, strengthJump), ForceMode2D.Impulse);
+            jumping = true;
+
+        } else {
+            jumping = false;
 
         }
 
-        move = Input.GetAxis("Horizontal");
-        transform.position += new Vector3(speed * move * Time.deltaTime, 0, 0);
+        Flip();
+        RunningAnimation();
+
+    }
+
+    private void FixedUpdate() {
+        Move();
+
+        if (jumping) {
+            Jump();
+            jumping = false;
+        }
 
     }
 
     private void Jump() {
-        if (floor && Input.GetKeyDown(KeyCode.Space)) {
-            GetComponent<Rigidbody2D>().AddForce(new Vector2(0, strengthJump), ForceMode2D.Impulse);
+        rb.AddForce(new Vector2(0f, strengthJump), ForceMode2D.Impulse);
 
-        }
     }
 
     private void Move() {
-        if (floor) {
-            move = Input.GetAxis("Horizontal");
-            transform.position += new Vector3(speed * move * Time.deltaTime, 0, 0);
-            
-        }
+        rb.velocity = new Vector2(move * speed, rb.velocity.y);
 
     }
 
     private void Flip() {
         if (move < 0) {
-            GetComponent<SpriteRenderer>().flipX = true;
+            sprite.flipX = true;
 
         } else if (move > 0) {
-            GetComponent<SpriteRenderer>().flipX = false;
+            sprite.flipX = false;
 
         }
     }
 
-    private void RunAnimation() {
+    private void RunningAnimation() {
         if (move > 0 || move < 0) {
-            GetComponent<Animator>().SetBool("Run", true);
+            GetComponent<Animator>().SetBool("Running", true);
 
         } else {
-            GetComponent<Animator>().SetBool("Run", false);
+            GetComponent<Animator>().SetBool("Running", false);
             
         }
     }
