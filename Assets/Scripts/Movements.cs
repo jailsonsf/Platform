@@ -11,15 +11,34 @@ public class Movements : MonoBehaviour {
     }
 
     private void FixedUpdate() {
-        Move();
+        // Jump();
+        // Move();
         Flip();
         RunAnimation();
 
+        if (floor && Input.GetKeyDown(KeyCode.Space)) {
+            GetComponent<Rigidbody2D>().AddForce(new Vector2(0, strengthJump), ForceMode2D.Impulse);
+
+        }
+
+        move = Input.GetAxis("Horizontal");
+        transform.position += new Vector3(speed * move * Time.deltaTime, 0, 0);
+
+    }
+
+    private void Jump() {
+        if (floor && Input.GetKeyDown(KeyCode.Space)) {
+            GetComponent<Rigidbody2D>().AddForce(new Vector2(0, strengthJump), ForceMode2D.Impulse);
+
+        }
     }
 
     private void Move() {
-        move = Input.GetAxis("Horizontal");
-        transform.position += new Vector3(speed * move * Time.deltaTime, 0, 0);
+        if (floor) {
+            move = Input.GetAxis("Horizontal");
+            transform.position += new Vector3(speed * move * Time.deltaTime, 0, 0);
+            
+        }
 
     }
 
