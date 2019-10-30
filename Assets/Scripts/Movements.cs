@@ -8,6 +8,7 @@ public class Movements : MonoBehaviour {
 
     private Rigidbody2D rb;
     private SpriteRenderer sprite;
+    private Animator animationCharacter;
 
     private float move;
     private bool jumping;
@@ -15,6 +16,7 @@ public class Movements : MonoBehaviour {
     private void Start() {
         rb = GetComponent<Rigidbody2D>();
         sprite = GetComponent<SpriteRenderer>();
+        animationCharacter = GetComponent<Animator>();
     }
 
     private void Update() {
@@ -38,8 +40,9 @@ public class Movements : MonoBehaviour {
 
         if (jumping) {
             Jump();
-            jumping = false;
+            
         }
+        jumping = false;
 
     }
 
@@ -65,10 +68,10 @@ public class Movements : MonoBehaviour {
 
     private void RunningAnimation() {
         if (move > 0 || move < 0) {
-            GetComponent<Animator>().SetBool("Running", true);
+            animationCharacter.SetBool("Running", true);
 
         } else {
-            GetComponent<Animator>().SetBool("Running", false);
+            animationCharacter.SetBool("Running", false);
             
         }
     }
