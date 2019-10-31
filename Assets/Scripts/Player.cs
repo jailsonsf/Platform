@@ -1,6 +1,6 @@
-using UnityEngine;
+﻿using UnityEngine;
 
-public class Movements : MonoBehaviour {
+public class Player : MonoBehaviour {
 
     [SerializeField] private float speed = 10;
     [SerializeField] private float strengthJump = 10;
@@ -31,7 +31,6 @@ public class Movements : MonoBehaviour {
         }
 
         Flip();
-        RunningAnimation();
 
     }
 
@@ -63,16 +62,6 @@ public class Movements : MonoBehaviour {
         } else if (move > 0) {
             sprite.flipX = false;
 
-        }
-    }
-
-    private void RunningAnimation() {
-        if (move > 0 || move < 0) {
-            animationCharacter.SetBool("Running", true);
-
-        } else {
-            animationCharacter.SetBool("Running", false);
-            
         }
     }
     
