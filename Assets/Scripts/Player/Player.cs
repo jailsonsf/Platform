@@ -16,7 +16,6 @@ public class Player : MonoBehaviour {
     private void Start() {
         rb = GetComponent<Rigidbody2D>();
         sprite = GetComponent<SpriteRenderer>();
-        animationCharacter = GetComponent<Animator>();
     }
 
     private void Update() {
@@ -77,5 +76,10 @@ public class Player : MonoBehaviour {
             floor = false;
 
         }
+    }
+
+    public float getMove () {
+        return move;
+
     }
 }
